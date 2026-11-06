@@ -1,0 +1,1292 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#08090b" />
+    <title>LEVI.EXE — The Dark Knight Under Investigation</title>
+    <link rel="stylesheet" href="stylesheet.css" />
+  </head>
+  <body>
+    <main>
+      <div class="topline">
+        <span>GCPD // GOTHAM CITY POLICE DEPARTMENT</span
+        ><span>CONFIDENTIAL CASE FILE — 001</span>
+      </div>
+      <header class="panel hero">
+        <div class="kicker">[ GOTHAM CITY POLICE DEPARTMENT ]</div>
+        <h1>THE DARK<br /><span>KNIGHT ON TRIAL</span></h1>
+        <p class="subtitle">
+          Gotham's most wanted suspect is... Levi.<br />Prove your innocence,
+          Batman.
+        </p>
+        <span class="bat" aria-hidden="true">🦇</span>
+        <div class="stamp">CONFIDENTIAL CASE FILE — 001</div>
+        <button class="primary enter-button" id="start" type="button">
+          LET'S START →
+        </button>
+      </header>
+
+      <section class="panel content" style="margin-top: 14px">
+        <section id="story" aria-labelledby="storyTitle">
+          <div class="status">
+            <span>GOTHAM CITY POLICE DEPARTMENT</span>
+            <span>INCOMING DISPATCH // CONFIDENTIAL</span>
+          </div>
+          <h2 id="storyTitle">CONFIDENTIAL CASE FILE — 001</h2>
+          <p id="storyText" class="story-text" aria-live="polite"></p>
+          <div class="actions">
+            <button class="primary" id="beginMission" type="button" disabled>
+              ACCEPT THE CASE →
+            </button>
+          </div>
+        </section>
+
+        <div id="game" class="hidden">
+          <div class="status">
+            <span id="levelLabel">CHALLENGE 01 / 04</span
+            ><span id="scoreLabel">0 FILES UNLOCKED</span>
+          </div>
+          <div class="track"><div class="fill" id="progress"></div></div>
+          <h2 id="levelTitle">THE ENCRYPTED EVIDENCE FILE</h2>
+          <p class="small" id="category">PASSWORD DECRYPTION</p>
+          <p class="prompt" id="question" aria-live="off"></p>
+          <section
+            id="passwordChallenge"
+            class="password-challenge hidden"
+            aria-label="Password challenge"
+          >
+            <div
+              id="passwordGuesses"
+              class="password-guesses"
+              aria-label="Previous guesses"
+            ></div>
+            <p id="attemptCount" class="small attempt-count">ATTEMPTS: 0 / 6</p>
+            <form id="passwordForm" class="password-form" novalidate>
+              <label for="passwordInput"
+                >DECRYPT THE 5-LETTER EVIDENCE KEY</label
+              >
+              <div class="password-entry">
+                <input
+                  id="passwordInput"
+                  name="password"
+                  type="text"
+                  minlength="5"
+                  maxlength="5"
+                  pattern="[A-Za-z]{5}"
+                  inputmode="text"
+                  autocomplete="off"
+                  autocapitalize="characters"
+                  spellcheck="false"
+                  required
+                  aria-describedby="passwordHelp"
+                />
+                <button class="primary" id="passwordSubmit" type="submit">
+                  DECRYPT →
+                </button>
+              </div>
+              <span id="passwordHelp" class="small">
+                Five letters. Green = right letter, right place. Yellow = right
+                letter, wrong place.
+              </span>
+            </form>
+            <div class="actions hidden" id="passwordNextAction">
+              <button class="primary" id="passwordContinue" type="button">
+                OPEN NEXT FILE →
+              </button>
+            </div>
+          </section>
+          <section
+            id="mazeChallenge"
+            class="maze-challenge hidden"
+            aria-label="Gotham maze challenge"
+          >
+            <div class="maze-hud">
+              <span id="mazeTimer">TIME: 55s</span>
+              <span id="mazeEvidence">EVIDENCE: 0 / 3</span>
+              <span>🤡 JOKER: IN PURSUIT</span>
+            </div>
+            <p class="small maze-key">
+              ARROWS / WASD / D-PAD &nbsp; 🦇 YOU &nbsp; 🤡 JOKER &nbsp; ◆
+              EVIDENCE &nbsp; 🚪 GCPD CHECKPOINT &nbsp; ▲ TRAP &nbsp; ■ WALL
+            </p>
+            <div
+              id="mazeGrid"
+              class="maze-grid"
+              role="grid"
+              aria-label="Gotham maze"
+            ></div>
+            <div class="maze-controls" aria-label="Maze directional controls">
+              <span></span>
+              <button type="button" data-direction="up" aria-label="Move up">
+                ↑
+              </button>
+              <span></span>
+              <button
+                type="button"
+                data-direction="left"
+                aria-label="Move left"
+              >
+                ←
+              </button>
+              <button
+                type="button"
+                data-direction="down"
+                aria-label="Move down"
+              >
+                ↓
+              </button>
+              <button
+                type="button"
+                data-direction="right"
+                aria-label="Move right"
+              >
+                →
+              </button>
+            </div>
+            <div id="mazeNextAction" class="actions hidden">
+              <button class="primary" id="mazeContinue" type="button">
+                OPEN NEXT FILE →
+              </button>
+            </div>
+            <div id="mazeResetAction" class="actions hidden">
+              <button class="secondary" id="mazeReset" type="button">
+                RESET CHALLENGE
+              </button>
+            </div>
+          </section>
+          <section
+            id="memoryChallenge"
+            class="memory-challenge hidden"
+            aria-label="Memory matching challenge"
+          >
+            <div class="memory-status">
+              <span id="memoryPairs" aria-live="polite"
+                >MATCHED: 0 / 4 PAIRS</span
+              >
+              <span>🤡 THE JOKER SCRAMBLED THE FILE</span>
+            </div>
+            <div id="memoryGrid" class="memory-grid"></div>
+            <div id="memoryNextAction" class="actions hidden">
+              <button class="primary" id="memoryContinue" type="button">
+                OPEN NEXT FILE →
+              </button>
+            </div>
+          </section>
+          <section
+            id="evidenceChallenge"
+            class="evidence-challenge hidden"
+            aria-label="GCPD final evidence review"
+          >
+            <div class="evidence-file">
+              <div class="evidence-file-heading">
+                <span id="evidenceNumber">EVIDENCE FILE 01 / 04</span>
+                <span>CLASSIFIED</span>
+              </div>
+              <h3 id="evidenceTitle"></h3>
+              <p id="evidenceStatement" class="evidence-statement"></p>
+            </div>
+            <p class="evidence-question">
+              What does this evidence tell the jury about Levi?
+            </p>
+            <div id="evidenceOptions" class="evidence-options"></div>
+            <div class="actions">
+              <button
+                class="primary"
+                id="evidenceSubmit"
+                type="button"
+                disabled
+              >
+                SUBMIT FINDING →
+              </button>
+            </div>
+          </section>
+          <div class="answers" id="answers"></div>
+          <div class="actions" id="answerActions">
+            <button class="primary" id="submit" disabled>
+              LOCK IN ANSWER →
+            </button>
+          </div>
+          <div id="notice" class="notice hidden" aria-live="polite"></div>
+        </div>
+
+        <div id="ending" class="hidden">
+          <div class="reward">
+            <div class="big">🏆 🦇</div>
+            <p class="kicker">GCPD CASE FILE // FINAL VERDICT</p>
+            <h2 style="color: var(--green)">CASE CLOSED</h2>
+            <p class="subtitle">
+              The evidence has been reviewed.<br />The Dark Knight is cleared of
+              all charges.
+            </p>
+          </div>
+          <div class="certificate">
+            <p class="kicker">GOTHAM CITY POLICE DEPARTMENT // CERTIFICATE</p>
+            <strong>LEVI — CERTIFIED<br />INTELLECTUAL MENACE</strong>
+            <p>
+              Awarded for outstanding evidence handling, escape skills,
+              suspicious intelligence and being an absolute menace.
+            </p>
+          </div>
+          <h2 style="margin-top: 30px">A PERSONAL STATEMENT</h2>
+          <div class="letter">
+            Dear Levi,<br /><br />
+            Happy birthday Gay Batman with a mission??<br /><br />
+            Today, your birthday WILL BE SPECIAL. This is just the start...
+            There is more! Andd I'm glad that we're BEST BEST FRIENDS! You bish
+            think I can find someone else who can be better than you? OFC NOT.
+            Not even burd- Thank you for being the best friend I could ever ask
+            for. You are the most amazing person I know, and I feel so lucky to
+            have you in my life. I hope this year it will be alot more different
+            than the other years, and for you to be smiling way more cause you
+            deserve it.<br /><br />
+            <strong>Love you loads, you bishh.</strong>
+          </div>
+          <div class="actions">
+            <button class="secondary" onclick="restart()">PLAY AGAIN ↻</button>
+          </div>
+        </div>
+      </section>
+      <div class="footer">
+        GOTHAM CITY POLICE DEPARTMENT // CASE FILE 001<br />NO BAT SIGNAL WAS
+        HARMED DURING THIS INVESTIGATION.
+      </div>
+    </main>
+    <button id="glitch" class="glitch-overlay hidden" type="button">
+      <span>GCPD SIGNAL OVERRIDE...</span>
+      <span class="glitch-instruction"
+        >CLICK ANYWHERE TO RELEASE THE FILES</span
+      >
+    </button>
+    <button
+      id="secretMessagePopup"
+      class="secret-popup hidden"
+      type="button"
+      aria-label="Open secret birthday message"
+    >
+      <span class="secret-popup-kicker">INCOMING // PRIVATE TRANSMISSION</span>
+      <strong>ONE LAST SECRET, BATMAN.</strong>
+      <span>The case is closed, but six birthday files remain classified.</span>
+      <span class="secret-popup-action">OPEN SECRET MESSAGE →</span>
+    </button>
+    <section
+      id="birthdayFiles"
+      class="birthday-files hidden"
+      aria-labelledby="birthdayFilesTitle"
+    >
+      <div class="birthday-balloons" aria-hidden="true">
+        <span>🎈</span>
+        <span>🎈</span>
+        <span>🎈</span>
+        <span>🎈</span>
+        <span>🎈</span>
+        <span>🎈</span>
+        <span>🎈</span>
+        <span>🎈</span>
+      </div>
+      <div class="birthday-files-header">
+        <p class="kicker">GOTHAM CITY // INTERCEPTED TRANSMISSIONS</p>
+        <h2 id="birthdayFilesTitle">
+          SIX FILES. SIX PEOPLE. ONE VERY LOVED BATMAN.
+        </h2>
+        <p>CLASSIFIED BIRTHDAY WISHES — DECRYPTED</p>
+      </div>
+      <div id="birthdayFileGrid" class="birthday-file-grid"></div>
+      <div class="birthday-files-final">
+        <p>GOTHAM IS LUCKY TO HAVE YOU.</p>
+        <h2>HAPPY BIRTHDAY, LEVI.</h2>
+        <button class="secondary" onclick="restart()">PLAY AGAIN ↻</button>
+      </div>
+    </section>
+    <script>
+      const transmission = `GOTHAM CITY POLICE DEPARTMENT
+
+CONFIDENTIAL CASE FILE — 001
+ATTENTION, BATMAN.
+
+We have a situation.
+
+For weeks, Gotham City has been investigating a series of suspicious activities linked to one individual.
+
+The suspect is known to operate under the alias THE DARK KNIGHT.
+
+Yes. We're talking about you.
+
+Our intelligence reports suggest that you've been hiding classified information, exhibiting suspicious levels of intelligence, and getting away with far too many questionable activities.
+
+The Gotham City Police Department has reason to believe that you are guilty.
+
+Unfortunately for you, we've gathered enough evidence to reopen the case.
+
+Your mission, should you choose to accept it, is to complete four classified challenges, examine the evidence and uncover the truth behind the allegations.
+
+But be warned: every challenge brings us one step closer to proving you guilty.
+
+Your objective: Prove your innocence.
+
+Our objective: Prove otherwise.
+
+And Batman? We have a feeling you're not going to like the verdict.
+
+CASE STATUS: UNDER INVESTIGATION
+
+Gotham City Police Department — End transmission.`;
+      const birthdayMessages = [
+        {
+          sender: "From Burd",
+          message:
+            "Happy birthday Levi! Hope you farm Maepletea, sunny and silent today and have an amazing birthday!",
+        },
+        {
+          sender: "From Mae",
+          message: "Happy birthday, i hope u go bald ❤️",
+        },
+        {
+          sender: "From Abdo",
+          message:
+            "Happy birthday levi, wishing u an amazing year ahead and may your aim get sharper.",
+        },
+        {
+          sender: "From Sunny",
+          message:
+            "Happyyy birthday Levi, enjoy ur birthday to the max. Don’t let anyone ruin ur day tho, I hope u get farmed by a random in bedwars to the point where u start rage quitting.",
+        },
+        {
+          sender: "From Masik",
+          message: "I love you and that you're the goat bro.",
+        },
+        {
+          sender: "From Nena",
+          message: "Pending...",
+        },
+      ];
+      const puzzles = [
+        {
+          title: "THE ENCRYPTED EVIDENCE FILE",
+          category: "PASSWORD DECRYPTION // WORD LENGTH: 5",
+          question:
+            "The GCPD has encrypted a key piece of evidence. Crack its five-letter password to access the file and uncover what the department is hiding.",
+          password: "NIGHT",
+          success:
+            "Evidence file accessed. The GCPD did not expect you to crack that so quickly.",
+        },
+        {
+          title: "THE GOTHAM PURSUIT",
+          category: "NAVIGATION CHALLENGE // TIME LIMIT: 55 SECONDS",
+          question:
+            "The Joker is on your trail and the GCPD checkpoint is your only way out. Navigate Gotham, collect all three pieces of evidence, avoid the traps, and reach the checkpoint before time runs out.",
+          maze: true,
+          success:
+            "Three pieces of evidence recovered. You've made it to the GCPD checkpoint with the case file intact.",
+        },
+        {
+          title: "THE JOKER'S EVIDENCE SCRAMBLE",
+          category: "MEMORY MATCH // 4 PAIRS",
+          question:
+            "The Joker has tampered with the case evidence to confuse the investigation. Match all four pairs to restore the missing information and strengthen your defence.",
+          memory: true,
+          success:
+            "Evidence restored. The Joker's attempt to muddle the case has been exposed.",
+        },
+        {
+          title: "THE CASE FOR THE DEFENCE",
+          category:
+            "GCPD FINAL REVIEW // SUBJECT: THE DARK KNIGHT // VERDICT PENDING",
+          question: `FINAL EVIDENCE REVIEW.
+
+The department has examined the evidence collected so far.
+
+Some of it points to a suspiciously capable vigilante. Some of it points to someone loyal, thoughtful and willing to show up for the people around him.
+
+The GCPD is not convinced the whole story has been told.
+
+Review the final evidence and decide what it says about the suspect.
+
+SUBJECT: LEVI, ALIAS THE DARK KNIGHT.
+
+CASE STATUS: VERDICT PENDING.`,
+          evidence: [
+            {
+              title: "THE ONE WHO STANDS BESIDE YOU",
+              statement:
+                "Subject doesn't just care about people behind closed doors. When someone he cares about is being treated unfairly, he's willing to speak up, stand his ground and defend them, even when other people are watching. He doesn't shy away from standing on the right side, and makes the people around him feel like they don't have to face things alone.",
+              options: [
+                "He just doesn't like being left out of an argument.",
+                "He's loyal, courageous and stands up for the people he cares about.",
+                "He's simply someone who enjoys debating.",
+              ],
+              answer: 1,
+              quality: "Loyalty & Courage",
+            },
+            {
+              title: "THE UNWRITTEN APOLOGY",
+              statement:
+                "Subject is someone people can turn to without worrying about being judged. He makes it easy to talk about anything, listens without making you feel silly for how you feel, and somehow knows how to cheer you up when things get difficult. Sometimes, instead of letting someone sit alone with their sadness, he'll insist on getting in a call, putting on some bollywood disco music instead of sad songs, and playing Minecraft (or Roblox when Minecraft gets boring) until things feel a little lighter.",
+              options: [
+                "He's simply avoiding having serious conversations.",
+                "He's just trying to distract everyone from their problems.",
+                "He's someone people can rely on, who makes them feel safe, understood and a little happier.",
+              ],
+              answer: 2,
+              quality: "Trust, comfort and emotional support",
+            },
+            {
+              title: "THE QUIET GOODNESS",
+              statement:
+                "Subject has been through more than most people realise, yet he hasn't allowed it to make him bitter or unkind. Instead, he continues to be caring, considerate and selfless. When he makes a mistake, he doesn't wait to be confronted or make excuses; he takes responsibility and owns up to it himself. He could have become harsh or mean because of what he's experienced, but somehow, he chose to remain the opposite.",
+              options: [
+                "He's just trying to keep everyone happy.",
+                "He's showing genuine goodness, humility and kindness, even when life hasn't always been kind to him.",
+                "He's pretending to be nice so nobody suspects him.",
+              ],
+              answer: 1,
+              quality: "Goodness, humility and compassion",
+            },
+            {
+              title: "THE JEALOUSY PROTOCOL",
+              statement:
+                "Subject sometimes struggles to hide when someone important to him has their attention elsewhere. His jealousy can come from how deeply he values certain connections and how much he wants to know that he matters just as much to the people who matter to him. Beneath that possessive streak is someone who gets attached, cares deeply and doesn't always know how to put those feelings into words. He wants to feel chosen, remembered and reassured that his place in someone's life is special.",
+              options: [
+                "He's just being dramatic and needs to get over himself.",
+                "He's showing how much he values his connections, even if he doesn't always express it perfectly.",
+                "He's secretly trying to take over all of Gotham.",
+              ],
+              answer: 1,
+              quality: "Attachment and vulnerability",
+            },
+          ],
+          success:
+            "The jury has reached its verdict: NOT GUILTY. Levi is cleared of the charges — though the GCPD is keeping an eye on that suspicious intelligence.",
+        },
+      ];
+      let current = 0,
+        selected = null,
+        unlocked = 0,
+        typingRun = 0,
+        passwordAttempts = 0,
+        mazeTimerId = null,
+        jokerTimerId = null,
+        mazeTimeLeft = 55,
+        mazeRunning = false,
+        mazePosition = { x: 1, y: 1 },
+        jokerPosition = { x: 7, y: 6 },
+        mazeEvidenceFound = new Set(),
+        memoryDeck = [],
+        memoryFlipped = [],
+        memoryMatched = new Set(),
+        memoryLocked = false,
+        memoryFlipTimerId = null,
+        evidenceIndex = 0,
+        evidenceSelected = null,
+        evidenceResolved = false,
+        secretPopupTimerId = null,
+        glitchFadeTimerId = null;
+      const memorySymbols = ["🦇", "🃏", "🔑", "💎"];
+      const mazeMap = [
+        "#########",
+        "#...#T..#",
+        "#.#.#.#.#",
+        "#.#...#.#",
+        "#...T...#",
+        "#.#.#.#.#",
+        "#..T#...#",
+        "#########",
+      ];
+      const evidenceLocations = [
+        { x: 3, y: 1 },
+        { x: 5, y: 3 },
+        { x: 7, y: 5 },
+      ];
+      const mazeExit = { x: 7, y: 1 };
+      const validFiveLetterWords = new Set(
+        `about above actor acute admit adopt adult after again agent agree ahead alarm album alert alien align alike alive allow alone along altar alter among anger angle angry apart apple apply arena argue arise armor aroma array aside asset audio audit avoid award aware badly baker bases basic beach began begin being below bench berry birth black blame blank blast blaze bleak blend bless blind block blood bloom board boast bonus boost booth bound brain brand brave bread break breed brick bride brief bring broad broke brown brush build built bunch buyer cable camel carry carve catch cause chain chair chart chase cheap check chest chief child chill china chose civil claim class clean clear clerk click climb clock close cloud coach coast color count court cover crack craft crash cream crime cross crowd crown curve cycle daily dance dated dealt death delay depth devil diary digit dirty doubt dozen draft drama drawn dream dress drink drive drove dying eager early earth eight elite empty enemy enjoy enter entry equal error event every exact exist extra faith false fancy fault fiber field fifth fifty fight final first fixed flash fleet floor fluid focus force found frame frank fraud fresh front frost fruit funny giant given glass globe going grace grade grand grant grass great green gross group guard guess guest guide guilt habit happy harsh heart heavy hence horse hotel house human ideal image imply index inner input issue ivory joint judge juice known label labor large laser later laugh layer learn lease least leave legal level light limit listed lobby local lodge logic loose lucky lunch magic major maker march match maybe mayor meant media metal might minor minus model money month moral motor mount mouse mouth movie music naive naked nerve never newly night noble noise north novel nurse occur ocean offer often order other ought owner paint panel paper party peace pearl phase phone photo piano piece pilot pitch place plain plane plant plate point pound power press price pride prime print prior prize proof proud prove queen quick quiet quite radio raise range rapid ratio reach react ready realm relax reply right rival river robot rocky rough round route royal ruler sadly salad sample scale scene scope score sense serve seven shade shake shall shape share sharp sheet shelf shell shift shine shirt shock shore short shown sight since sixth sixty sized skill sleep slice slide small smart smile smoke snack solar solid solve sorry sound south space spare speak speed spend spent spice spill split sport spray stack staff stage stake stand start state steam steel steep stick still stock stone stood storm story strip stuck study stuff style sugar suite super swear sweet table taken taste taught teeth thank their theme there thick thing think third those three threw throw tight timer tired title today topic total touch tough tower trace track trade train treat trend trial tried truck truly trunk trust truth twice under union unity until upper urban usage usual valley value video visit vital voice waste watch water wheel where which while white whole whose woman world worry worse worst worth would write wrong wrote years yeast yield young youth`
+          .split(/\s+/)
+          .filter((word) => word.length === 5),
+      );
+      const $ = (id) => document.getElementById(id);
+      function typeText(element, text, speed) {
+        const run = ++typingRun;
+        element.textContent = "";
+        element.classList.add("typing");
+        return new Promise((resolve) => {
+          let index = 0;
+          function typeNext() {
+            if (run !== typingRun) {
+              resolve(false);
+              return;
+            }
+            if (index === text.length) {
+              element.classList.remove("typing");
+              resolve(true);
+              return;
+            }
+            element.textContent += text[index++];
+            window.setTimeout(typeNext, speed);
+          }
+          typeNext();
+        });
+      }
+      function addAnswers(options) {
+        $("answers").replaceChildren();
+        options.forEach((option, i) => {
+          const button = document.createElement("button");
+          button.className = "answer";
+          button.textContent = String.fromCharCode(65 + i) + ". " + option;
+          button.addEventListener("click", () => {
+            selected = i;
+            document
+              .querySelectorAll(".answer")
+              .forEach((answer) => answer.classList.remove("selected"));
+            button.classList.add("selected");
+            $("submit").disabled = false;
+          });
+          $("answers").appendChild(button);
+        });
+      }
+      async function render() {
+        clearInterval(mazeTimerId);
+        clearInterval(jokerTimerId);
+        clearTimeout(memoryFlipTimerId);
+        mazeTimerId = null;
+        jokerTimerId = null;
+        memoryFlipTimerId = null;
+        mazeRunning = false;
+        const p = puzzles[current];
+        const isPasswordChallenge = Boolean(p.password);
+        const isMazeChallenge = Boolean(p.maze);
+        const isMemoryChallenge = Boolean(p.memory);
+        const isEvidenceChallenge = Boolean(p.evidence);
+        selected = null;
+        evidenceIndex = 0;
+        evidenceSelected = null;
+        evidenceResolved = false;
+        passwordAttempts = 0;
+        $("mazeChallenge").classList.toggle("hidden", !isMazeChallenge);
+        $("memoryChallenge").classList.toggle("hidden", !isMemoryChallenge);
+        $("evidenceChallenge").classList.toggle("hidden", !isEvidenceChallenge);
+        $("answers").replaceChildren();
+        $("passwordGuesses").replaceChildren();
+        $("passwordInput").value = "";
+        $("attemptCount").textContent = "ATTEMPTS: 0 / 6";
+        $("levelLabel").textContent =
+          `CHALLENGE 0${current + 1} / 0${puzzles.length}`;
+        $("scoreLabel").textContent =
+          `${unlocked} FILE${unlocked === 1 ? "" : "S"} UNLOCKED`;
+        $("progress").style.width = `${(unlocked / puzzles.length) * 100}%`;
+        $("levelTitle").textContent = p.title;
+        $("category").textContent = p.category;
+        $("passwordChallenge").classList.toggle("hidden", !isPasswordChallenge);
+        $("answers").classList.toggle(
+          "hidden",
+          isPasswordChallenge ||
+            isMazeChallenge ||
+            isMemoryChallenge ||
+            isEvidenceChallenge,
+        );
+        $("answerActions").classList.toggle(
+          "hidden",
+          isPasswordChallenge ||
+            isMazeChallenge ||
+            isMemoryChallenge ||
+            isEvidenceChallenge,
+        );
+        $("passwordNextAction").classList.add("hidden");
+        $("mazeNextAction").classList.add("hidden");
+        $("mazeResetAction").classList.add("hidden");
+        $("memoryNextAction").classList.add("hidden");
+        $("evidenceSubmit").disabled = true;
+        $("evidenceSubmit").textContent = "SUBMIT FINDING →";
+        $("question").textContent = "";
+        $("notice").className = "notice hidden";
+        $("notice").textContent = "";
+        $("submit").disabled = true;
+        $("submit").textContent = "LOCK IN ANSWER →";
+        if (isPasswordChallenge) {
+          $("passwordInput").disabled = true;
+          $("passwordSubmit").disabled = true;
+          $("passwordSubmit").textContent = "DECRYPT →";
+        }
+        if (isMazeChallenge) initializeMaze();
+        if (isMemoryChallenge) initializeMemoryGame();
+        if (await typeText($("question"), p.question, 32)) {
+          if (isPasswordChallenge) {
+            $("passwordInput").disabled = false;
+            $("passwordSubmit").disabled = false;
+          } else if (isMazeChallenge) {
+            startMazeTimer();
+          } else if (isMemoryChallenge) {
+            memoryLocked = false;
+            renderMemoryCards();
+          } else if (isEvidenceChallenge) {
+            renderEvidenceFile(p);
+          } else {
+            addAnswers(p.options);
+          }
+        }
+      }
+      function initializeMemoryGame() {
+        clearTimeout(memoryFlipTimerId);
+        memoryFlipTimerId = null;
+        memoryDeck = [...memorySymbols, ...memorySymbols].map((symbol) => ({
+          symbol,
+        }));
+        for (let i = memoryDeck.length - 1; i > 0; i--) {
+          const randomIndex = Math.floor(Math.random() * (i + 1));
+          [memoryDeck[i], memoryDeck[randomIndex]] = [
+            memoryDeck[randomIndex],
+            memoryDeck[i],
+          ];
+        }
+        memoryFlipped = [];
+        memoryMatched = new Set();
+        memoryLocked = true;
+        $("memoryPairs").textContent = "MATCHED: 0 / 4 PAIRS";
+        $("memoryGrid").replaceChildren();
+      }
+      function renderMemoryCards() {
+        const grid = $("memoryGrid");
+        grid.replaceChildren();
+        memoryDeck.forEach((card, index) => {
+          const button = document.createElement("button");
+          const isMatched = memoryMatched.has(index);
+          const isFlipped = memoryFlipped.includes(index);
+          button.type = "button";
+          button.className = "memory-card";
+          if (isMatched) button.classList.add("matched");
+          if (isFlipped || isMatched) button.classList.add("revealed");
+          button.textContent = isFlipped || isMatched ? card.symbol : "?";
+          button.setAttribute(
+            "aria-label",
+            isMatched
+              ? `Matched ${card.symbol}`
+              : isFlipped
+                ? `Revealed ${card.symbol}`
+                : `Face-down card ${index + 1}`,
+          );
+          button.disabled = memoryLocked || isMatched || isFlipped;
+          button.addEventListener("click", () => flipMemoryCard(index));
+          grid.appendChild(button);
+        });
+      }
+      function flipMemoryCard(index) {
+        if (
+          memoryLocked ||
+          memoryMatched.has(index) ||
+          memoryFlipped.includes(index)
+        ) {
+          return;
+        }
+        memoryFlipped.push(index);
+        renderMemoryCards();
+        if (memoryFlipped.length < 2) return;
+
+        const [first, second] = memoryFlipped;
+        if (memoryDeck[first].symbol === memoryDeck[second].symbol) {
+          memoryMatched.add(first);
+          memoryMatched.add(second);
+          memoryFlipped = [];
+          $("memoryPairs").textContent =
+            `MATCHED: ${memoryMatched.size / 2} / 4 PAIRS`;
+          if (memoryMatched.size === memoryDeck.length) {
+            memoryLocked = true;
+            renderMemoryCards();
+            grantAccess(puzzles[current].success);
+            $("memoryNextAction").classList.remove("hidden");
+          } else {
+            renderMemoryCards();
+          }
+          return;
+        }
+
+        memoryLocked = true;
+        renderMemoryCards();
+        memoryFlipTimerId = window.setTimeout(() => {
+          memoryFlipped = [];
+          memoryLocked = false;
+          memoryFlipTimerId = null;
+          renderMemoryCards();
+        }, 850);
+      }
+      function renderEvidenceFile(puzzle) {
+        const file = puzzle.evidence[evidenceIndex];
+        evidenceSelected = null;
+        evidenceResolved = false;
+        $("evidenceNumber").textContent =
+          `EVIDENCE FILE 0${evidenceIndex + 1} / 0${puzzle.evidence.length}`;
+        $("evidenceTitle").textContent = file.title;
+        $("evidenceStatement").textContent = `“${file.statement}”`;
+        $("evidenceSubmit").disabled = true;
+        $("evidenceSubmit").textContent = "SUBMIT FINDING →";
+        const options = $("evidenceOptions");
+        options.replaceChildren();
+        file.options.forEach((option, index) => {
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "answer";
+          button.textContent = `${String.fromCharCode(65 + index)}. ${option}`;
+          button.addEventListener("click", () => {
+            if (evidenceResolved) return;
+            evidenceSelected = index;
+            options
+              .querySelectorAll(".answer")
+              .forEach((answer) => answer.classList.remove("selected"));
+            button.classList.add("selected");
+            $("evidenceSubmit").disabled = false;
+            $("notice").className = "notice hidden";
+            $("notice").textContent = "";
+          });
+          options.appendChild(button);
+        });
+      }
+      function submitEvidenceFinding() {
+        const puzzle = puzzles[current];
+        if (evidenceResolved) {
+          if (evidenceIndex === puzzle.evidence.length - 1) {
+            advance();
+          } else {
+            evidenceIndex++;
+            $("notice").className = "notice hidden";
+            $("notice").textContent = "";
+            renderEvidenceFile(puzzle);
+          }
+          return;
+        }
+        if (evidenceSelected === null) return;
+
+        const file = puzzle.evidence[evidenceIndex];
+        if (evidenceSelected !== file.answer) {
+          $("notice").className = "notice bad";
+          $("notice").textContent =
+            "Not quite, Batman. Re-examine the evidence before the jury reaches its verdict.";
+          return;
+        }
+
+        evidenceResolved = true;
+        $("evidenceOptions")
+          .querySelectorAll(".answer")
+          .forEach((answer) => {
+            answer.disabled = true;
+          });
+        if (evidenceIndex === puzzle.evidence.length - 1) {
+          grantAccess(puzzle.success);
+          $("evidenceSubmit").disabled = false;
+          $("evidenceSubmit").textContent = "OPEN FINAL FILE →";
+          return;
+        }
+
+        $("notice").className = "notice good";
+        $("notice").textContent =
+          `EVIDENCE VERIFIED — ${file.quality.toUpperCase()}.`;
+        $("evidenceSubmit").textContent = "NEXT EVIDENCE →";
+      }
+      function initializeMaze() {
+        clearInterval(mazeTimerId);
+        clearInterval(jokerTimerId);
+        mazeTimerId = null;
+        jokerTimerId = null;
+        mazeRunning = false;
+        mazeTimeLeft = 55;
+        mazePosition = { x: 1, y: 1 };
+        jokerPosition = { x: 7, y: 6 };
+        mazeEvidenceFound = new Set();
+        $("mazeNextAction").classList.add("hidden");
+        $("mazeResetAction").classList.add("hidden");
+        $("notice").className = "notice hidden";
+        $("notice").textContent = "";
+        renderMaze();
+      }
+      function renderMaze() {
+        const grid = $("mazeGrid");
+        grid.replaceChildren();
+        $("mazeTimer").textContent = `TIME: ${mazeTimeLeft}s`;
+        $("mazeTimer").classList.toggle("urgent", mazeTimeLeft <= 15);
+        $("mazeEvidence").textContent =
+          `EVIDENCE: ${mazeEvidenceFound.size} / ${evidenceLocations.length}`;
+        mazeMap.forEach((row, y) => {
+          [...row].forEach((cell, x) => {
+            const tile = document.createElement("div");
+            tile.className = "maze-tile";
+            tile.setAttribute("role", "gridcell");
+            if (cell === "#") {
+              tile.classList.add("wall");
+              tile.setAttribute("aria-label", "Wall");
+              tile.textContent = "■";
+            } else if (mazePosition.x === x && mazePosition.y === y) {
+              tile.classList.add("player");
+              tile.setAttribute("aria-label", "Batman");
+              tile.textContent = "🦇";
+            } else if (jokerPosition.x === x && jokerPosition.y === y) {
+              tile.classList.add("joker");
+              tile.setAttribute("aria-label", "The Joker");
+              tile.textContent = "🤡";
+            } else if (cell === "T") {
+              tile.classList.add("trap");
+              tile.setAttribute("aria-label", "Trap");
+              tile.textContent = "▲";
+            } else if (
+              evidenceLocations.some(
+                (evidence, index) =>
+                  evidence.x === x &&
+                  evidence.y === y &&
+                  !mazeEvidenceFound.has(index),
+              )
+            ) {
+              tile.classList.add("evidence");
+              tile.setAttribute("aria-label", "Evidence");
+              tile.textContent = "◆";
+            } else if (mazeExit.x === x && mazeExit.y === y) {
+              const isUnlocked =
+                mazeEvidenceFound.size === evidenceLocations.length;
+              tile.classList.add(isUnlocked ? "exit" : "locked-exit");
+              tile.setAttribute(
+                "aria-label",
+                isUnlocked ? "GCPD checkpoint" : "Locked GCPD checkpoint",
+              );
+              tile.textContent = isUnlocked ? "🚪" : "🔒";
+            } else {
+              tile.classList.add("floor");
+              tile.setAttribute("aria-label", "Path");
+            }
+            grid.appendChild(tile);
+          });
+        });
+        document.querySelectorAll(".maze-controls button").forEach((button) => {
+          button.disabled = !mazeRunning;
+        });
+      }
+      function startMazeTimer() {
+        mazeRunning = true;
+        renderMaze();
+        mazeTimerId = window.setInterval(() => {
+          mazeTimeLeft--;
+          $("mazeTimer").textContent = `TIME: ${mazeTimeLeft}s`;
+          $("mazeTimer").classList.toggle("urgent", mazeTimeLeft <= 15);
+          if (mazeTimeLeft <= 0) catchDetective();
+        }, 1000);
+        jokerTimerId = window.setInterval(moveJoker, 1850);
+      }
+      function getJokerNextStep() {
+        const queue = [{ ...jokerPosition, firstStep: null }];
+        const visited = new Set([`${jokerPosition.x},${jokerPosition.y}`]);
+        const steps = [
+          { x: 0, y: -1 },
+          { x: 0, y: 1 },
+          { x: -1, y: 0 },
+          { x: 1, y: 0 },
+        ];
+        while (queue.length) {
+          const current = queue.shift();
+          if (current.x === mazePosition.x && current.y === mazePosition.y) {
+            return current.firstStep;
+          }
+          for (const step of steps) {
+            const next = { x: current.x + step.x, y: current.y + step.y };
+            const key = `${next.x},${next.y}`;
+            if (
+              mazeMap[next.y]?.[next.x] === "#" ||
+              !mazeMap[next.y]?.[next.x] ||
+              visited.has(key)
+            ) {
+              continue;
+            }
+            visited.add(key);
+            queue.push({
+              ...next,
+              firstStep: current.firstStep || next,
+            });
+          }
+        }
+        return null;
+      }
+      function moveJoker() {
+        if (!mazeRunning) return;
+        const nextStep = getJokerNextStep();
+        if (!nextStep) return;
+        jokerPosition = nextStep;
+        if (
+          jokerPosition.x === mazePosition.x &&
+          jokerPosition.y === mazePosition.y
+        ) {
+          catchDetective();
+          return;
+        }
+        renderMaze();
+      }
+      function catchDetective() {
+        clearInterval(mazeTimerId);
+        clearInterval(jokerTimerId);
+        mazeTimerId = null;
+        jokerTimerId = null;
+        mazeRunning = false;
+        renderMaze();
+        $("notice").className = "notice bad denied";
+        $("notice").textContent =
+          "YOU'VE BEEN CAUGHT. SOME DARK KNIGHT YOU ARE.";
+        $("mazeResetAction").classList.remove("hidden");
+      }
+      function moveMaze(direction) {
+        if (!mazeRunning || current !== 1) return;
+        const delta = {
+          up: { x: 0, y: -1 },
+          down: { x: 0, y: 1 },
+          left: { x: -1, y: 0 },
+          right: { x: 1, y: 0 },
+        }[direction];
+        if (!delta) return;
+        const next = {
+          x: mazePosition.x + delta.x,
+          y: mazePosition.y + delta.y,
+        };
+        if (mazeMap[next.y]?.[next.x] === "#" || !mazeMap[next.y]?.[next.x]) {
+          return;
+        }
+        if (
+          next.x === mazeExit.x &&
+          next.y === mazeExit.y &&
+          mazeEvidenceFound.size < evidenceLocations.length
+        ) {
+          const notice = $("notice");
+          notice.className = "notice bad";
+          notice.textContent =
+            "GCPD checkpoint locked. Recover all three pieces of evidence first.";
+          return;
+        }
+        if (next.x === jokerPosition.x && next.y === jokerPosition.y) {
+          mazePosition = next;
+          catchDetective();
+          return;
+        }
+        mazePosition = next;
+        if (mazeMap[next.y][next.x] === "T") {
+          renderMaze();
+          catchDetective();
+          return;
+        }
+        evidenceLocations.forEach((evidence, index) => {
+          if (evidence.x === next.x && evidence.y === next.y) {
+            mazeEvidenceFound.add(index);
+          }
+        });
+        renderMaze();
+        if (next.x === mazeExit.x && next.y === mazeExit.y) {
+          clearInterval(mazeTimerId);
+          clearInterval(jokerTimerId);
+          mazeTimerId = null;
+          jokerTimerId = null;
+          mazeRunning = false;
+          renderMaze();
+          grantAccess(puzzles[current].success);
+          $("mazeNextAction").classList.remove("hidden");
+        } else {
+          $("notice").className = "notice hidden";
+          $("notice").textContent = "";
+        }
+      }
+      function resetMazeChallenge() {
+        initializeMaze();
+        startMazeTimer();
+      }
+      function getGuessFeedback(guess, answer) {
+        const result = Array(guess.length).fill("absent");
+        const remaining = {};
+        for (let i = 0; i < answer.length; i++) {
+          if (guess[i] === answer[i]) {
+            result[i] = "correct";
+          } else {
+            remaining[answer[i]] = (remaining[answer[i]] || 0) + 1;
+          }
+        }
+        for (let i = 0; i < guess.length; i++) {
+          if (result[i] === "correct") continue;
+          if (remaining[guess[i]] > 0) {
+            result[i] = "present";
+            remaining[guess[i]]--;
+          }
+        }
+        return result;
+      }
+      function addGuessRow(guess, feedback) {
+        const row = document.createElement("div");
+        row.className = "guess-row";
+        row.setAttribute("aria-label", `Guess ${guess}`);
+        [...guess].forEach((letter, index) => {
+          const tile = document.createElement("span");
+          tile.className = `guess-tile ${feedback[index]}`;
+          tile.textContent = letter;
+          tile.setAttribute("aria-label", `${letter}: ${feedback[index]}`);
+          row.appendChild(tile);
+        });
+        $("passwordGuesses").appendChild(row);
+      }
+      function grantAccess(message) {
+        unlocked++;
+        $("scoreLabel").textContent =
+          `${unlocked} FILE${unlocked === 1 ? "" : "S"} UNLOCKED`;
+        $("progress").style.width = `${(unlocked / puzzles.length) * 100}%`;
+        const notice = $("notice");
+        notice.className = "notice good granted";
+        notice.replaceChildren();
+        const title = document.createElement("strong");
+        title.textContent = "✓ ACCESS GRANTED";
+        const detail = document.createElement("span");
+        detail.textContent = message;
+        notice.append(title, detail);
+        $("submit").disabled = true;
+        $("submit").textContent =
+          current === puzzles.length - 1
+            ? "OPEN FINAL FILE →"
+            : "NEXT CHALLENGE →";
+      }
+      function submitPassword(event) {
+        event.preventDefault();
+        const p = puzzles[current];
+        const guess = $("passwordInput").value.toUpperCase();
+        if (passwordAttempts >= 6) return;
+        if (!/^[A-Z]{5}$/.test(guess)) {
+          showPasswordError("Enter exactly five letters to submit a guess.");
+          return;
+        }
+        if (!validFiveLetterWords.has(guess.toLowerCase())) {
+          showPasswordError(
+            "That isn't in the GCPD's five-letter English word list. Try a real word; this won't use an attempt.",
+          );
+          return;
+        }
+
+        passwordAttempts++;
+        $("attemptCount").textContent = `ATTEMPTS: ${passwordAttempts} / 6`;
+        const feedback = getGuessFeedback(guess, p.password);
+        addGuessRow(guess, feedback);
+        if (guess === p.password) {
+          $("passwordInput").disabled = true;
+          $("passwordSubmit").disabled = true;
+          $("passwordNextAction").classList.remove("hidden");
+          grantAccess(p.success);
+          return;
+        }
+
+        const notice = $("notice");
+        if (passwordAttempts === 6) {
+          notice.className = "notice bad";
+          void notice.offsetWidth;
+          notice.classList.add("denied");
+          notice.replaceChildren();
+          const title = document.createElement("strong");
+          title.textContent = "✕ ACCESS DENIED";
+          const warning = document.createElement("span");
+          warning.textContent =
+            "Final attempt used! The GCPD recommends less guessing and more detective work.";
+          notice.append(title, warning);
+        } else {
+          notice.className = "notice hidden";
+          notice.textContent = "";
+        }
+        $("passwordInput").value = "";
+        if (passwordAttempts === 6) {
+          $("passwordInput").disabled = true;
+          $("passwordSubmit").disabled = true;
+          $("passwordSubmit").textContent = "FILE LOCKED";
+          $("passwordHelp").textContent =
+            "The file has locked after six attempts. Reset the password challenge to try again.";
+          const retry = document.createElement("button");
+          retry.className = "secondary";
+          retry.type = "button";
+          retry.textContent = "RESET CHALLENGE";
+          retry.addEventListener("click", resetPasswordChallenge);
+          $("passwordNextAction").replaceChildren(retry);
+          $("passwordNextAction").classList.remove("hidden");
+        } else {
+          $("passwordInput").focus();
+        }
+      }
+      function resetPasswordChallenge() {
+        passwordAttempts = 0;
+        $("attemptCount").textContent = "ATTEMPTS: 0 / 6";
+        $("passwordGuesses").replaceChildren();
+        $("passwordInput").value = "";
+        $("passwordInput").disabled = false;
+        $("passwordSubmit").disabled = false;
+        $("passwordSubmit").textContent = "DECRYPT →";
+        $("passwordHelp").textContent =
+          "Five letters. Green = right letter, right place. Yellow = right letter, wrong place.";
+        const continueButton = document.createElement("button");
+        continueButton.className = "primary";
+        continueButton.id = "passwordContinue";
+        continueButton.type = "button";
+        continueButton.textContent = "OPEN NEXT FILE →";
+        $("passwordNextAction").replaceChildren(continueButton);
+        $("passwordContinue").addEventListener("click", advance);
+        $("passwordNextAction").classList.add("hidden");
+        $("notice").className = "notice hidden";
+        $("notice").textContent = "";
+        $("passwordInput").focus();
+      }
+      function showPasswordError(message) {
+        const notice = $("notice");
+        notice.className = "notice bad";
+        notice.textContent = message;
+        $("passwordInput").focus();
+      }
+      function checkAnswer() {
+        if (selected === null) return;
+        const p = puzzles[current],
+          notice = $("notice");
+        if (selected !== p.answer) {
+          notice.className = "notice bad";
+          void notice.offsetWidth;
+          notice.classList.add("denied");
+          notice.replaceChildren();
+          const title = document.createElement("strong");
+          title.textContent = "✕ ACCESS DENIED";
+          const message = document.createElement("span");
+          message.textContent =
+            "GCPD warning: That answer is more suspicious than the Joker's alibi. Review the evidence and try again, Batman.";
+          notice.append(title, message);
+          return;
+        }
+        grantAccess(p.success);
+      }
+      function advance() {
+        current++;
+        if (current === puzzles.length) {
+          $("submit").disabled = true;
+          $("game").classList.add("hidden");
+          $("ending").classList.remove("hidden");
+          $("progress").style.width = "100%";
+          secretPopupTimerId = window.setTimeout(() => {
+            $("secretMessagePopup").classList.remove("hidden");
+          }, 5000);
+        } else render();
+      }
+      function startSecretMessage() {
+        $("secretMessagePopup").classList.add("hidden");
+        $("glitch").classList.remove("hidden");
+        document.body.classList.add("glitching");
+      }
+      function releaseBirthdayFiles() {
+        if (!$("birthdayFiles").classList.contains("hidden")) return;
+        const grid = $("birthdayFileGrid");
+        grid.replaceChildren();
+        birthdayMessages.forEach((file, index) => {
+          const article = document.createElement("article");
+          article.className = "birthday-file";
+          article.style.setProperty("--file-index", index);
+
+          const header = document.createElement("div");
+          header.className = "birthday-file-heading";
+          const fileId = document.createElement("span");
+          fileId.textContent = `GCPD INTERCEPT // 00${index + 1}`;
+          const status = document.createElement("span");
+          status.textContent = "FOR LEVI";
+          header.append(fileId, status);
+
+          const sender = document.createElement("h3");
+          sender.textContent = file.sender;
+          const message = document.createElement("p");
+          message.textContent = file.message;
+          article.append(header, sender, message);
+          grid.appendChild(article);
+        });
+
+        $("birthdayFiles").classList.remove("hidden");
+        document.body.classList.remove("glitching");
+        $("glitch").classList.add("glitch-fading");
+        clearTimeout(glitchFadeTimerId);
+        glitchFadeTimerId = window.setTimeout(finishGlitchFade, 3000);
+      }
+      function finishGlitchFade() {
+        clearTimeout(glitchFadeTimerId);
+        glitchFadeTimerId = null;
+        $("glitch").classList.add("hidden");
+        $("glitch").classList.remove("glitch-fading");
+      }
+      $("submit").addEventListener("click", () => {
+        if ($("submit").disabled) return;
+        if ($("submit").textContent === "LOCK IN ANSWER →") checkAnswer();
+        else advance();
+      });
+      document.querySelectorAll(".maze-controls button").forEach((button) => {
+        button.addEventListener("click", () =>
+          moveMaze(button.dataset.direction),
+        );
+      });
+      document.addEventListener("keydown", (event) => {
+        if (!mazeRunning || current !== 1) return;
+        const target = event.target;
+        if (
+          target instanceof HTMLElement &&
+          (target.isContentEditable ||
+            ["INPUT", "TEXTAREA"].includes(target.tagName))
+        ) {
+          return;
+        }
+        const keyDirections = {
+          ArrowUp: "up",
+          w: "up",
+          ArrowDown: "down",
+          s: "down",
+          ArrowLeft: "left",
+          a: "left",
+          ArrowRight: "right",
+          d: "right",
+        };
+        const direction =
+          keyDirections[event.key] || keyDirections[event.key.toLowerCase()];
+        if (direction) {
+          event.preventDefault();
+          moveMaze(direction);
+        }
+      });
+      $("mazeContinue").addEventListener("click", advance);
+      $("mazeReset").addEventListener("click", resetMazeChallenge);
+      $("memoryContinue").addEventListener("click", advance);
+      $("evidenceSubmit").addEventListener("click", submitEvidenceFinding);
+      $("passwordForm").addEventListener("submit", submitPassword);
+      $("secretMessagePopup").addEventListener("click", startSecretMessage);
+      $("glitch").addEventListener("click", releaseBirthdayFiles);
+      $("passwordContinue").addEventListener("click", advance);
+      $("passwordInput").addEventListener("input", (event) => {
+        event.currentTarget.value = event.currentTarget.value.toUpperCase();
+      });
+      $("start").addEventListener("click", () => {
+        document.body.classList.add("mission-started");
+        typeText($("storyText"), transmission, 24).then((finished) => {
+          if (finished) $("beginMission").disabled = false;
+        });
+      });
+      $("beginMission").addEventListener("click", () => {
+        $("story").classList.add("hidden");
+        $("game").classList.remove("hidden");
+        render();
+      });
+      $("glitch").addEventListener("transitionend", (event) => {
+        if (event.target === $("glitch") && event.propertyName === "opacity") {
+          finishGlitchFade();
+        }
+      });
+      function restart() {
+        current = 0;
+        unlocked = 0;
+        clearInterval(mazeTimerId);
+        clearInterval(jokerTimerId);
+        clearTimeout(secretPopupTimerId);
+        clearTimeout(glitchFadeTimerId);
+        mazeTimerId = null;
+        jokerTimerId = null;
+        secretPopupTimerId = null;
+        glitchFadeTimerId = null;
+        mazeRunning = false;
+        $("story").classList.add("hidden");
+        document.body.classList.remove("glitching");
+        $("glitch").classList.add("hidden");
+        $("glitch").classList.remove("glitch-fading");
+        $("secretMessagePopup").classList.add("hidden");
+        $("birthdayFiles").classList.add("hidden");
+        $("birthdayFileGrid").replaceChildren();
+        $("ending").classList.add("hidden");
+        $("game").classList.remove("hidden");
+        render();
+      }
+    </script>
+  </body>
+</html>
